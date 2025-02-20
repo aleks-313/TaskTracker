@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CLParserTest {
     CLParser parser;
-    String defaultFunction = "update";
-    String defaultArgument = "0";
-    String defaultAdditionalArgument = "new updated value";
+    private final String defaultFunction = "update";
+    private final String defaultArgument = "0";
+    private final String defaultAdditionalArgument = "new updated value";
 
     @Test
     void parserAcceptsInput(){
@@ -18,8 +18,8 @@ public class CLParserTest {
 
     @Test
     void parserParsesFunction(){
-        createParser(new String[] {"add", "test"});
-        assertEquals(parser.getFunction(), Function.ADD);
+        createParser(new String[] {defaultFunction, "test"});
+        assertEquals(parser.getFunction(), Function.UPDATE);
     }
 
     @Test
