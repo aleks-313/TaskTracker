@@ -23,6 +23,7 @@ public class JsonController {
         } catch (IOException e) {
             System.out.println("File could not be created.");
         }
+        jsonMapper.setJsonFile(file);
     }
 
     public void readTasks(){
@@ -35,5 +36,9 @@ public class JsonController {
 
     public List<Task> getTasks(){
         return tasks;
+    }
+
+    public void persistTasks(List<Task> newTasks){
+        jsonMapper.persistTasks(newTasks);
     }
 }

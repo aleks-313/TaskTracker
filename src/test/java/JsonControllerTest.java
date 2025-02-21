@@ -11,18 +11,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonControllerTest {
     JsonController jsonController;
-    public static final String nameAndExtensionOfFile = "tasks-test.json";
 
     @BeforeEach
     void setup(){
         jsonController = new JsonController();
-        jsonController.createFile(nameAndExtensionOfFile);
+        jsonController.createFile(TaskControllerTest.nameAndExtensionOfReadOnlyFile);
     }
 
     @Test
     void jsonControllerCreatesJsonFile(){
-        jsonController.createFile(nameAndExtensionOfFile);
-        File file = new File(nameAndExtensionOfFile);
+        File file = new File(TaskControllerTest.nameAndExtensionOfWriteFile);
+        if (!file.delete()){
+            System.out.println("Failed to delete file " + file.getAbsolutePath() + ". The file might not exist");
+        }
+
+        jsonController.createFile(TaskControllerTest.nameAndExtensionOfWriteFile);
+
         assertTrue(file.exists());
     }
 

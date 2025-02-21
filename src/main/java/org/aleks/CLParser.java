@@ -27,7 +27,11 @@ public class CLParser {
     }
 
     private void parseArgument() {
-        argument = input[1];
+        if (input.length > 1){
+            argument = input[1];
+        } else {
+            argument = null;
+        }
     }
 
     private void parseAdditionalArgument() {

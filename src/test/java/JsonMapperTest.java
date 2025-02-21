@@ -8,7 +8,7 @@ import java.nio.file.Path;
 
 public class JsonMapperTest {
     final JsonMapper jsonMapper = new JsonMapper();
-    final File file = new File(JsonControllerTest.nameAndExtensionOfFile);
+    final File file = new File(TaskControllerTest.nameAndExtensionOfReadOnlyFile);
 
     @Test
     void jsonMapperCanMapTasks(){
