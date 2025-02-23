@@ -15,11 +15,7 @@ public class JsonController {
     public void createFile(String fileNameAndExtension){
         file = new File(fileNameAndExtension);
         try {
-            if (file.createNewFile()){
-                System.out.println("First boot up. Task list created. Welcome!");
-            } else {
-                System.out.println("Welcome back!");
-            }
+            file.createNewFile();
         } catch (IOException e) {
             System.out.println("File could not be created.");
         }

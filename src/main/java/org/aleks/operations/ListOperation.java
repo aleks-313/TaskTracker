@@ -3,8 +3,6 @@ package org.aleks.operations;
 import org.aleks.Status;
 import org.aleks.Task;
 
-import java.util.List;
-
 public class ListOperation extends Operation{
     private final String status;
 
@@ -38,6 +36,10 @@ public class ListOperation extends Operation{
     }
 
     private void listTasks() {
+        if (tasks.isEmpty()){
+            System.out.println("You have not added any tasks yet");
+            return;
+        }
         for (Task task : tasks) {
             System.out.println("Task ID: " + task.getId());
             System.out.println("Task Description: " + task.getDescription());

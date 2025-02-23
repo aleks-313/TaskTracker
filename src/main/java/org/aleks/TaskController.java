@@ -1,7 +1,6 @@
 package org.aleks;
 
-import org.aleks.operations.ListOperation;
-import org.aleks.operations.AddOperation;
+import org.aleks.operations.*;
 
 public class TaskController {
     public static String jsonFile = "tasks.json";
@@ -26,17 +25,19 @@ public class TaskController {
                 new AddOperation(argument).execute();
                 break;
             case UPDATE:
-                //new UpdateOperation(argument, additionalArgument).execute();
+                new UpdateOperation(argument, additionalArgument).execute();
                 break;
             case DELETE:
-                //new DeleteOperation(argument).execute();
+                new DeleteOperation(argument).execute();
                 break;
             case LIST:
                 new ListOperation(argument).execute();
                 break;
             case MARK_DONE:
+                new MarkOperation(Status.DONE, argument).execute();
                 break;
             case MARK_IN_PROGRESS:
+                new MarkOperation(Status.IN_PROGRESS, argument).execute();
                 break;
         }
     }

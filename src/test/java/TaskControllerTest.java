@@ -1,4 +1,5 @@
 import org.aleks.JsonController;
+import org.aleks.Status;
 import org.aleks.TaskController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -15,6 +16,8 @@ public class TaskControllerTest {
     @BeforeEach
     public void setUp() {
         TaskController.jsonFile = nameAndExtensionOfWriteFile;
+        File jsonFile = new File(nameAndExtensionOfWriteFile);
+        jsonFile.delete();
     }
 
     @Nested
@@ -22,22 +25,23 @@ public class TaskControllerTest {
 
         @Test
         public void taskControllerCanExecuteListAllFunction() {
-            TaskController controller = new TaskController(new String[] {"list"});
+            new TaskController(new String[] {"list"});
         }
 
         @Test
         public void taskControllerCanExecuteListTodoFunction() {
-            TaskController controller = new TaskController(new String[] {"list", "todo"});
+            new TaskController(new String[] {"list", "todo"});
         }
 
         @Test
         public void taskControllerCanExecuteListInProgressFunction() {
-            TaskController controller = new TaskController(new String[] {"list", "in-progress"});
+            new TaskController(new String[] {"list", "in-progress"});
+
         }
 
         @Test
         public void taskControllerCanExecuteListDoneFunction() {
-            TaskController controller = new TaskController(new String[] {"list", "done"});
+            new TaskController(new String[] {"list", "done"});
         }
 
         @Test
@@ -50,22 +54,79 @@ public class TaskControllerTest {
     class AddOperationTests{
         @Test
         public void taskControllerCanExecuteAddFunction() {
-            TaskController controller = new TaskController(new String[] {"add", "Learn Python"});
+            new TaskController(new String[] {"add", "Learn Python"});
         }
 
         @Test
         public void taskControllerCanAppendTasksWhenAdding() {
-            File jsonFile = new File(nameAndExtensionOfWriteFile);
-            jsonFile.delete();
-
-            TaskController controller = new TaskController(new String[] {"add", "Learn Python"});
-            controller = new TaskController(new String[] {"add", "Learn Java"});
+            new TaskController(new String[] {"add", "Learn Python"});
+            new TaskController(new String[] {"add", "Learn Java"});
 
             JsonController jsonController = new JsonController();
             jsonController.createFile(TaskControllerTest.nameAndExtensionOfWriteFile);
             jsonController.readTasks();
 
             assertEquals(2, jsonController.getTasks().size());
+        }
+    }
+
+    @Nested
+    class DeleteOperationTests{
+        @Test
+        public void taskControllerCanExecuteDeleteFunction() {
+            new TaskController(new String[] {"add", "Learn Python"});
+            new TaskController(new String[] {"add", "Learn Java"});
+            new TaskController(new String[] {"delete", "1"});
+
+            JsonController jsonController = new JsonController();
+            jsonController.createFile(nameAndExtensionOfWriteFile);
+            jsonController.readTasks();
+
+            assertEquals(1, jsonController.getTasks().size());
+        }
+    }
+
+    @Nested
+    class MarkOperationTests{
+        @Test
+        public void taskControllerCanExecuteMarkInProgressFunction() {
+            new TaskController(new String[] {"add", "Learn Python"});
+            new TaskController(new String[] {"mark_in_progress", "1"});
+
+            JsonController jsonController = new JsonController();
+            jsonController.createFile(nameAndExtensionOfWriteFile);
+            jsonController.readTasks();
+
+            assertEquals(1, jsonController.getTasks().size());
+            assertEquals(Status.IN_PROGRESS, jsonController.getTasks().getFirst().getStatus());
+        }
+
+        @Test
+        public void taskControllerCanExecuteMarkDoneFunction() {
+            new TaskController(new String[] {"add", "Learn Python"});
+            new TaskController(new String[] {"mark_done", "1"});
+
+            JsonController jsonController = new JsonController();
+            jsonController.createFile(nameAndExtensionOfWriteFile);
+            jsonController.readTasks();
+
+            assertEquals(1, jsonController.getTasks().size());
+            assertEquals(Status.DONE, jsonController.getTasks().getFirst().getStatus());
+        }
+    }
+
+    @Nested
+    class UpdateOperationTests{
+        @Test
+        public void taskControllerCanExecuteUpdateFunction() {
+            new TaskController(new String[] {"add", "Learn Python"});
+            new TaskController(new String[] {"update", "1", "Learn Java"});
+
+            JsonController jsonController = new JsonController();
+            jsonController.createFile(nameAndExtensionOfWriteFile);
+            jsonController.readTasks();
+
+            assertEquals("Learn Java", jsonController.getTasks().getFirst().getDescription());
         }
     }
 }

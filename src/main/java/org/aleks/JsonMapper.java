@@ -24,7 +24,7 @@ public class JsonMapper {
         try {
             tasks = objectMapper.readValue(json, new TypeReference<>() {});
         } catch (JsonProcessingException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Could not read tasks. Maybe you haven't added any?");
         }
         return tasks;
     }
