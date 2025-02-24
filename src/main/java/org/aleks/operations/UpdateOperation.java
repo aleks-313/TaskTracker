@@ -2,6 +2,7 @@ package org.aleks.operations;
 
 import org.aleks.Task;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class UpdateOperation extends Operation {
@@ -40,6 +41,7 @@ public class UpdateOperation extends Operation {
 
         if (taskToChange.isPresent()) {
             taskToChange.get().setDescription(name);
+            taskToChange.get().setUpdatedAt(LocalDateTime.now());
         } else {
             System.out.println("No task found with id " + id);
         }
